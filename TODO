@@ -1,0 +1,5 @@
+volumes u can map a directory or file  from the host wikth a one from the container(docker volumes vs bind mounts)
+
+CMD VS ENTRYPOINT
+
+multistage dockerfile

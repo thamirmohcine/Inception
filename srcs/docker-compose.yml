@@ -1,0 +1,25 @@
+
+services:
+  mariadb:
+    image: mariadb:inception
+    build: ./requirements/mariadb
+    container_name: mariadb
+    networks:
+      - inception
+    env_file:
+      - .env
+    restart: unless-stopped
+
+
+
+
+
+
+networks:
+  inception:
+    name: inception
+
+
+volumes:
+  mariadb:
+  wordpress:
