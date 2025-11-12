@@ -1,6 +1,6 @@
 FROM debian:bookworm
 
-RUN apt update && apt upgrade -y && apt install mariadb-server -y
+RUN apt update && apt upgrade -y && apt install mariadb-server netcat-traditional -y
 
 COPY ./tools/m_db.sh .
 

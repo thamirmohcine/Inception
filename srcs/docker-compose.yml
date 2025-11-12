@@ -10,9 +10,28 @@ services:
       - .env
     restart: unless-stopped
 
+  wordpress:
+    image: wordpress:inception
+    build: ./requirements/wordpress
+    container_name: wordpress
+    networks:
+      - inception
+    env_file:
+      - .env
+    restart: unless-stopped
 
 
-
+  nginx:
+    image: nginx:inception
+    build: ./requirement/nginx
+    container_name: nginx
+    networks:
+      - inception
+    env_file:
+      - .env
+    ports:
+      - 443:443
+    restart: unless-stopped
 
 
 networks:
@@ -21,5 +40,5 @@ networks:
 
 
 volumes:
-  mariadb:
-  wordpress:
+  # mariadb:
+  # wordpress:

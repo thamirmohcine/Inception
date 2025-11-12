@@ -3,3 +3,7 @@ volumes u can map a directory or file  from the host wikth a one from the contai
 CMD VS ENTRYPOINT
 
 multistage dockerfile
+
+
+
+fastcgi vs cgi
