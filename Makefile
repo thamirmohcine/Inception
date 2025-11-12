@@ -2,6 +2,10 @@
 all:
 	@docker-compose -f srcs/docker-compose.yml up -d --build
 
+push:
+	@echo -n "enter a commit message: "
+	@git add . && read commit && git commit -m "$$commit" && git push
+
 down:
 	@docker-compose -f srcs/docker-compose.yml down
 
