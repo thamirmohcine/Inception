@@ -1,4 +1,5 @@
 
+
 services:
   mariadb:
     image: mariadb:inception
@@ -8,7 +9,15 @@ services:
       - inception
     env_file:
       - .env
-    restart: unless-stopped
+    volumes:
+      - mariadb:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "3306"]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+      start_period: 30s
+    restart: always
 
   wordpress:
     image: wordpress:inception
@@ -18,12 +27,23 @@ services:
       - inception
     env_file:
       - .env
-    restart: unless-stopped
+    volumes:
+      - wordpress:/var/www/html
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "9000"]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+      start_period: 30s
+    restart: always
 
 
   nginx:
     image: nginx:inception
-    build: ./requirement/nginx
+    build: ./requirements/nginx
     container_name: nginx
     networks:
       - inception
@@ -31,14 +51,31 @@ services:
       - .env
     ports:
       - 443:443
-    restart: unless-stopped
+    depends_on:
+      wordpress:
+        condition: service_healthy
+    volumes:
+      - wordpress:/var/www/html
+    restart: always
 
 
 networks:
   inception:
     name: inception
+    driver: bridge
 
 
 volumes:
-  # mariadb:
-  # wordpress:
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/mthamir/data/wordpress
+
+  mariadb:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/mthamir/data/mariadb

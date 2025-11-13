@@ -56,3 +56,7 @@ when you execute docker run <image-name> the Docker deamon perform the following
 Result: The container's filesystem appears as a complete, single structure, even though it's logically composed of many stacked layers. The container is running with its own isolated view of the world.
 
 
+
+				HOW THE HTTPS WORKS ? 
+THE CLIENT >>>>>>      <<CERTIFICATE AUTHORITY>>   
+

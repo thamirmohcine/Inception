@@ -2,8 +2,15 @@ volumes u can map a directory or file  from the host wikth a one from the contai
 
 CMD VS ENTRYPOINT
 
-multistage dockerfile
-
-
 
 fastcgi vs cgi
+
+tls handshake, how to generate a self-signed certificate
+
+wordpress installation process
+
+docker compose 
+
+pid 1 docker
+
+
