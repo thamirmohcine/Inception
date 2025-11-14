@@ -1,4 +1,4 @@
-FROM debian:bookworm
+FROM debian:bullseye
 
 RUN apt update && apt upgrade -y && apt install php php-mysqli curl php-fpm netcat-traditional -y
 

@@ -10,7 +10,7 @@ services:
     env_file:
       - .env
     # volumes:
-      # - mariadb:/var/lib/mysql
+    #   - mariadb:/var/lib/mysql
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "3306"]
       interval: 10s
@@ -50,7 +50,7 @@ services:
     env_file:
       - .env
     ports:
-      - 443:443
+      - 4444:443
     depends_on:
       wordpress:
         condition: service_healthy
@@ -74,8 +74,8 @@ volumes:
       device: /home/mthamir/data/wordpress
 
   mariadb:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/mthamir/data/mariadb
+    # driver: local
+    # driver_opts:
+    #   type: none
+    #   o: bind
+    #   device: /home/mthamir/data/mariadb
