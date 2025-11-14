@@ -14,9 +14,9 @@ services:
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "3306"]
       interval: 10s
-      timeout: 10s
+      timeout: 5s
       retries: 20
-      start_period: 30s
+      start_period: 60s
     restart: always
 
   wordpress:
@@ -50,7 +50,7 @@ services:
     env_file:
       - .env
     ports:
-      - 4444:443
+      - 443:443
     depends_on:
       wordpress:
         condition: service_healthy

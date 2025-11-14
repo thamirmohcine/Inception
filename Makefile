@@ -19,9 +19,9 @@ clean: down
 	@docker system prune -af
 
 fclean: clean
-	@rm -rf /home/$(USER)/data/wordpress/*
-	@rm -rf /home/$(USER)/data/mariadb/*
-	@docker volume rm $$(docker volume ls -q) 2>/dev/null || true
+	@sudo rm -rf /home/$(USER)/data/wordpress/*
+	@sudo rm -rf /home/$(USER)/data/mariadb/*
+	@docker volume rm $$(docker volume ls -q) 2>/dev/null
 
 re: fclean all
 
