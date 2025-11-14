@@ -1,19 +1,19 @@
 
 all: down
-	@docker-compose -f srcs/docker-compose.yml up -d --build
+	@docker compose -f srcs/docker-compose.yml up -d --build
 
 push:
 	@echo -n "enter a commit message: "
 	@git add . && read commit && git commit -m "$$commit" && git push
 
 down:
-	@docker-compose -f srcs/docker-compose.yml down
+	@docker compose -f srcs/docker-compose.yml down
 
 stop:
-	@docker-compose -f srcs/docker-compose.yml stop
+	@docker compose -f srcs/docker-compose.yml stop
 
 start:
-	@docker-compose -f srcs/docker-compose.yml start
+	@docker compose -f srcs/docker-compose.yml start
 
 clean: down
 	@docker system prune -af
@@ -26,6 +26,6 @@ fclean: clean
 re: fclean all
 
 logs:
-	@docker-compose -f srcs/docker-compose.yml logs -f
+	@docker compose -f srcs/docker-compose.yml logs -f
 
 .PHONY: all up down stop start clean fclean re logs

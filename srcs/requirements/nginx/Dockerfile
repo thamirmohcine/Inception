@@ -2,7 +2,7 @@ FROM debian:bookworm
 
 RUN apt update && apt upgrade -y && apt install nginx openssl  -y   
 
-RUN mkdir /etc/nginx/ssl
+RUN mkdir -p /etc/nginx/ssl
 
 RUN openssl req -x509 -nodes -days 180 -newkey rsa:2048 \
     -keyout /etc/nginx/ssl/server_ca.key -out /etc/nginx/ssl/server_ca.crt \
