@@ -9,8 +9,8 @@ services:
       - inception
     env_file:
       - .env
-    # volumes:
-    #   - mariadb:/var/lib/mysql
+    volumes:
+      - mariadb:/var/lib/mysql
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "3306"]
       interval: 10s
@@ -74,8 +74,8 @@ volumes:
       device: /home/mthamir/data/wordpress
 
   mariadb:
-    # driver: local
-    # driver_opts:
-    #   type: none
-    #   o: bind
-    #   device: /home/mthamir/data/mariadb
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/mthamir/data/mariadb
