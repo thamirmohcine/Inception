@@ -2,6 +2,7 @@
 
 A system administration project that sets up a small infrastructure composed of different services using Docker and Docker Compose. The infrastructure consists of a LEMP stack (Linux, Nginx, MariaDB, PHP) with WordPress.
 
+
 ## 🏗 Building the Docker Image
 
 When you run docker build, the Docker daemon follows a sequential process to construct the final image:
@@ -119,8 +120,8 @@ All images are built from Debian Bookworm base images. Each service has its own 
 
 Two bind mount volumes ensure data persistence:
 
-- `/home/$USER/data/wordpress` - WordPress files
-- `/home/$USER/data/mariadb` - MariaDB database files
+- `/home/mthamir/data/wordpress` - WordPress files
+- `/home/mthamir/data/mariadb` - MariaDB database files
 
 ### Security
 
