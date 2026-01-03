@@ -2,6 +2,32 @@
 
 A system administration project that sets up a small infrastructure composed of different services using Docker and Docker Compose. The infrastructure consists of a LEMP stack (Linux, Nginx, MariaDB, PHP) with WordPress.
 
+## 🛠 Key Features & Mechanics
+
+Union File Systems (UnionFS) allow multiple directories (layers) to appear as a single, unified filesystem. Below are the core concepts that power this behavior:
+
+### 1. Layered Approach (Stacking)
+
+Union filesystems stack directories on top of each other based on a specific priority. When a file is accessed, the system searches through the stack from top to bottom. It returns the first instance of the file it finds, effectively "shadowing" files with the same name in lower layers.
+
+### 2. Copy-on-Write (CoW)
+
+To maintain integrity, lower layers are typically marked as read-only, while the topmost layer is writable.
+
+The Process: If a user modifies a file existing in a read-only layer, the system automatically copies that file to the writable top layer.
+
+The Result: Changes are applied to the new copy, leaving the original file in the lower layer completely untouched. This ensures efficiency and data persistence.
+
+### 3. Whiteouts (File Deletion)
+
+Since lower layers are read-only, files cannot be physically deleted from them. Instead, UnionFS uses Whiteouts:
+
+When a file is deleted, a special "whiteout" or "opaque" file is created in the writable layer.
+
+This marker tells the system to hide the file from the merged view.
+
+To the user, the file appears deleted, even though it still exists safely in the underlying read-only branch.
+
 ## Architecture
 
 The project implements a three-tier architecture with the following services:
@@ -53,8 +79,8 @@ All images are built from Debian Bookworm base images. Each service has its own 
 
 Two bind mount volumes ensure data persistence:
 
-- `/home/mthamir/data/wordpress` - WordPress files
-- `/home/mthamir/data/mariadb` - MariaDB database files
+- `/home/$USER/data/wordpress` - WordPress files
+- `/home/$USER/data/mariadb` - MariaDB database files
 
 ### Security
 
