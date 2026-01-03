@@ -2,6 +2,46 @@
 
 A system administration project that sets up a small infrastructure composed of different services using Docker and Docker Compose. The infrastructure consists of a LEMP stack (Linux, Nginx, MariaDB, PHP) with WordPress.
 
+## 🏗 Building the Docker Image
+
+When you run docker build, the Docker daemon follows a sequential process to construct the final image:
+
+### 1. Instruction Execution
+
+Each instruction in the Dockerfile (FROM, RUN, COPY, etc.) is executed in order.
+
+### 2. Layer Creation & Stacking
+
+Snapshots: For every executable instruction, the Docker daemon creates a new Read-Only Image Layer. This layer is essentially a snapshot of the filesystem changes introduced by that specific command.
+
+Immutable Stack: These layers are stacked on top of each other. Each layer is immutable (cannot be changed). In line with UnionFS principles, files in higher layers take precedence over those in lower layers.
+
+### 3. Image Storage & Efficiency
+
+The final image is a collection of these read-only layers stored in the local Docker image cache.
+
+💡 Key Point: Layer Sharing If you build multiple images using the same base (e.g., FROM ubuntu), that common base layer is stored only once on your host system. This significantly reduces disk space and speeds up pulls/pushes.
+
+## 🚀 Running a Container
+
+When you execute docker run <image-name>, the Docker daemon transitions from a static image to a dynamic runtime environment:
+
+### 1. Lower Directories (lowerdir)
+
+The daemon takes all the read-only layers from the image and designates them as the lower directories. These form the stable foundation of the container’s filesystem.
+
+### 2. Upper Directory (upperdir)
+
+The daemon creates a brand new, empty Read-Write Layer (often called the "Container Layer"). This is the upper directory where all runtime changes (log files, new data, temp files) are stored.
+### 3. The Merged View
+
+Using the host kernel's capabilities (such as OverlayFS or AUFS), Docker performs a Union Mount. This instantly combines the lowerdir stack and the upperdir into a single Merged View.
+### 4. Process Isolation
+
+The container process starts with isolated Namespaces and Cgroups. The Merged View serves as its root filesystem (/).
+
+The Result: The container sees a single, unified filesystem. It can read from the image layers and write to its own private layer, all while remaining completely isolated from the host and other containers.
+
 ## 🛠 Key Features & Mechanics
 
 Union File Systems (UnionFS) allow multiple directories (layers) to appear as a single, unified filesystem. Below are the core concepts that power this behavior:
